@@ -9,7 +9,6 @@ export const itemChildSchema = new Schema(
         },
         childId: {
           type: String,
-          unique: true,
           required: true
         }
     },
