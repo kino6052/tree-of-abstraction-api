@@ -19,6 +19,6 @@ app.get = jest.fn().mockImplementation(
     (): Item => item
 );
 
-it('get an item and check its fields', () => {
+it('should get an item and check its validity', () => {
     expect(app.get('/item/:id')).toEqual(item);
 });
