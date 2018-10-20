@@ -1,24 +1,42 @@
 import { app } from '../../index';
+// import { Item } from '../../schemas/item/item';
 
-interface Item {
-    title: String,
-    description?: String,
-    visible?: Boolean,
-    collapsed?: Boolean,
-    label?: String,
-    children: Array<String>
+// interface ItemInterface {
+//     title: String,
+//     description?: String,
+//     visible?: Boolean,
+//     collapsed?: Boolean,
+//     label?: String,
+//     children: Array<String>
+// }
+
+interface ResponseInterface {
+    statusCode: Number,
+    data: String
 }
 
-it('should get an item and check its validity', () => {
-    let item: Item = { 
-        title: 'test',
-        description: 'test',
-        children: ['test']
-    }
-    
+// let item: ItemInterface = {
+//     title: 'test',
+//     description: 'test',
+//     children: ['test']
+// }
+
+it('should return 200 response for item get REST method', () => {
     app.get = jest.fn().mockImplementation(
-        (): Item => item
+        (): ResponseInterface => ({
+          statusCode: 200,
+          data: 'Some data'
+        })
     );
-    
-    expect(app.get('/item/:id')).toEqual(item);
+    expect(app.get('/item/test').statusCode).toEqual(200);
+});
+
+it('should return 400 response for item get REST method', () => {
+    app.get = jest.fn().mockImplementation(
+        (): ResponseInterface => ({
+          statusCode: 400,
+          data: 'Some data'
+        })
+    );
+    expect(app.get('/item/test').statusCode).toEqual(400);
 });
