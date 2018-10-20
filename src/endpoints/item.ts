@@ -25,6 +25,18 @@ export default (app: ReturnType<typeof express>) => {
         .then((data) => { res.send(data) })
         .catch((err) => { res.statusCode = 400; res.send(err); });
   });
+  
+  app.put('/item/:id/:child_id', jsonBodyParser, (req, res) => {
+    Item.updateOne({ "_id": req.params.id }, { $push: { children: req.params.child_id } })
+        .then((data) => { res.send(data) })
+        .catch((err) => { res.statusCode = 400; res.send(err); });
+  });
+  
+  app.delete('/item/:id/:child_id', jsonBodyParser, (req, res) => {
+    Item.updateOne({ "_id": req.params.id }, { $pull: { children: req.params.child_id } })
+        .then((data) => { res.send(data) })
+        .catch((err) => { res.statusCode = 400; res.send(err); });
+  });
 
   interface ItemQuery {
       title?: {
