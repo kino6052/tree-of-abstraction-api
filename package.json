@@ -20,13 +20,16 @@
   },
   "homepage": "https://github.com/kino6052/tree-of-abstraction-api#readme",
   "dependencies": {
+    "@types/es6-promise": "github:types/es6-promise",
     "@types/express": "^4.16.0",
     "@types/mongoose": "^5.2.4",
+    "@types/promise": "^7.1.30",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongodb": "^3.1.1",
     "mongoose": "^5.2.6",
+    "promise": "^8.0.2",
     "rimraf": "^2.6.2",
     "typescript": "^3.0.1"
   },
