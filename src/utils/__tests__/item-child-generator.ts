@@ -8,10 +8,34 @@ import { app } from '../../index';
 
 interface ItemResponse {
   statusCode: Number,
-  data: Array<Object>
+  data: Array<Item>
+}
+
+interface Item {
+  '_id': String,
+  children: Array<String>
 }
 
 it('should return 200 response for item get REST method', async () => {
   let itemResponse: ItemResponse = await app.get('/item');
-  expect(itemResponse.statusCode).toEqual(200);
+  let {
+    statusCode,
+    data = []
+  } = itemResponse;
+  expect(statusCode).toEqual(200);
+  data.map(
+    (item: Item) => {
+      let {
+        _id,
+        children = []
+      } = item;
+      if (_id) {
+        children.map(
+          (child: Object) => {
+            console.log(_id, child);
+          }
+        )
+      }
+    }
+  )
 });
