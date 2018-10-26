@@ -1,5 +1,8 @@
 import axios from 'axios';
+import { BASE_URL } from '../../index';
 import {saveItemChild, getItemChild} from './item-child-helper';
+
+
 
 interface Item {
   '_id': String,
@@ -12,7 +15,7 @@ interface ChildrenMapElement {
 }
 
 export const getItemsData = async (): Promise<Array<Item>> => {
-  let response = await axios.get(`/item`);
+  let response = await axios.get(`${BASE_URL}/item`);
   let {
     status,
     data

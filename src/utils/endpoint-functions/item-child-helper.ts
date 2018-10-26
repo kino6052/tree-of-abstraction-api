@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { BASE_URL } from '../..'
 
 interface ItemChild {
   '_id': String,
@@ -7,7 +8,7 @@ interface ItemChild {
 }
 
 export const getItemChild = async (parentId: String, childId: String): Promise<ItemChild> => {
-  let response = await axios.get(`/item-child/${parentId}/${childId}`);
+  let response = await axios.get(`${BASE_URL}/item-child/${parentId}/${childId}`);
   let {
     status,
     data
@@ -19,7 +20,7 @@ export const getItemChild = async (parentId: String, childId: String): Promise<I
 }
 
 export const saveItemChild = async (parentId: String, childId: String): Promise<ItemChild> => {
-  let response = await axios.post(`/item-child`, { parentId, childId });
+  let response = await axios.post(`${BASE_URL}/item-child`, { parentId, childId });
   let {
     status,
     data
