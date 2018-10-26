@@ -6,7 +6,7 @@
 // 6. Check for presence of Child in item-child Store
 
 import { app } from '../../index';
-
+import { getItemChild, saveItemChild } from '../endpoint-functions/item-child-helper';
 interface ItemResponse {
   statusCode: Number,
   data: Array<Item>
@@ -17,7 +17,7 @@ interface Item {
   children: Array<String>
 }
 
-it('should return 200 response for item get REST method', async () => {
+it('should perform saving operation for each child', async () => {
   // Stage 1: Get item data
   let itemResponse: ItemResponse = await app.get('/item');
   let {
@@ -60,46 +60,21 @@ it('should return 200 response for item get REST method', async () => {
   )
 
   // Stage 3: Save items
-  const getItemChild = async (parentId: String, childId: String) => {
-    return new Promise<Object>(
-      (resolve) => {
-        resolve({
-          statusCode: 200,
-          data: { parentId, childId }
-        })
-      }
-    )
-  }
-
-  const saveItemChild = async (parentId: String, childId: String) => {
-    return new Promise<Object>(
-      (resolve) => {
-        resolve({
-          statusCode: 400,
-          data: { parentId, childId }
-        })
-      }
-    )
-  }
-
   for (let itemChild of itemChildArray) {
     let {
       _id: parentId,
       child: childId
     } = itemChild;
-    let response: ItemResponse = <ItemResponse>(await getItemChild(parentId, childId));
-    let {
-      statusCode
-    } = response;
-    expect(statusCode).toEqual(200);
-    if (statusCode !== 200) {
-      let response: ItemResponse = <ItemResponse>(await saveItemChild(parentId, childId));
+    try {
+      await getItemChild(parentId, childId);
+    } catch (e) {
       let {
-        statusCode
-      } = response;
-      if (statusCode !== 200) {
-        // Add Item to Array of values that didn't go through
-      }
+        message
+      } = e;
+      expect(message).toEqual('Couldn\'t get item child');
+      let response = await saveItemChild(parentId, childId);
+      expect(response).not.toBe(null);
+      expect(response).not.toBe(undefined);
     }
   }
 });
