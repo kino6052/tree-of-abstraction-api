@@ -6,8 +6,8 @@ import noteEndpoints from './endpoints/note';
 import itemNoteEndpoints from './endpoints/item-note';
 import itemChildEndpoints from './endpoints/item-child';
 
-const MLAB = 'mongodb://test:Test123!@ds011963.mlab.com:11963/iolearn';
-
+export const MLAB = 'mongodb://test:Test123!@ds011963.mlab.com:11963/iolearn';
+export const BASE_URL = 'https://personal-dashboard-umbrella-kino6052.c9users.io';
 export const jsonBodyParser = bodyParser.json();
 export const app = express();
 
