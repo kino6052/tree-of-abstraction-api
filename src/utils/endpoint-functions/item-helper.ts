@@ -53,7 +53,7 @@ export const saveItemChildren = async (itemChildArray: Array<ChildrenMapElement>
       await getItemChild(parentId, childId);
     } catch (e) {
       try {
-        let response = await saveItemChild(parentId, childId);
+        await saveItemChild(parentId, childId);
       } catch (e) {
         unsavedItemChildren.push({ '_id': parentId, child: childId })
       }
