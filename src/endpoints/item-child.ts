@@ -1,6 +1,7 @@
 import express from 'express';
 import { jsonBodyParser } from '../index';
 import { ItemChild } from '../schemas/item-child/item-child';
+import { itemChildGenerator } from '../utils/item-child-generator';
 
 interface ItemChildQuery {
   itemId?: String,
@@ -14,6 +15,7 @@ export default (app: ReturnType<typeof express>) => {
     ItemChild.find(itemChildQuery)
       .then((data: Object) => { res.send(data) })
       .catch((err: Object) => { res.statusCode = 400; res.send(err); });
+    itemChildGenerator();
   });
 
   app.post('/item-child', jsonBodyParser, (req, res) => {

@@ -1,8 +1,13 @@
-import { getItemsData, iterateOverData, saveItemChildren } from './endpoint-functions/item-helper';
+import {
+  getItemsData,
+  // iterateOverData,
+  // saveItemChildren
+} from './endpoint-functions/item-helper';
 
-(async () => {
+export const itemChildGenerator = async () => {
   let data = await getItemsData();
-  let itemChildArray = await iterateOverData(data);
-  let unsavedItemChildren = await saveItemChildren(itemChildArray);
-  console.log(unsavedItemChildren)
-})();
+  console.log(data);
+  // let itemChildArray = await iterateOverData(data);
+  // let unsavedItemChildren = await saveItemChildren(itemChildArray);
+  // console.log(unsavedItemChildren)
+};
