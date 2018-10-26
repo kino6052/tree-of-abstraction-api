@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from '../../index';
-import {saveItemChild, getItemChild} from './item-child-helper';
+import {saveItemChild} from './item-child-helper';
 
 
 
@@ -56,8 +56,17 @@ export const saveItemChildren = async (itemChildArray: Array<ChildrenMapElement>
       child: childId
     } = itemChild;
     try {
-      await getItemChild(parentId, childId);
+      // let itemChildResponse = await getItemChild(parentId, childId);
+      try {
+          await saveItemChild(parentId, childId);
+          console.log(`Successfully saved ${parentId}:${childId}`)
+      } catch (e) {
+        console.log(e.message);
+        console.log('Couldn\'t save item child', parentId, childId);
+        unsavedItemChildren.push({ '_id': parentId, child: childId })
+      }
     } catch (e) {
+      console.log('Couldn\'t get item child')
       try {
         await saveItemChild(parentId, childId);
       } catch (e) {

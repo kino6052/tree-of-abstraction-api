@@ -26,7 +26,7 @@ export const saveItemChild = async (parentId: String, childId: String): Promise<
     data
   } = response;
   if (status !== 200) {
-    throw Error('Couldn\'t save itemChild');
+    throw Error(data);
   }
   return data;
 }

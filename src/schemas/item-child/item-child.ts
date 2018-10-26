@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 export const itemChildSchema = new Schema(
     {
-        itemId: {
+        parentId: {
           type: String,
           required: true
         },

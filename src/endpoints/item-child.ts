@@ -9,8 +9,9 @@ interface ItemChildQuery {
 }
 
 export default (app: ReturnType<typeof express>) => {
-  app.get('/item-child/generator', (req, res) => {
-    let unsavedItems = itemChildGenerator();
+  app.get('/item-child/generator', async (req, res) => {
+    console.log(req);
+    let unsavedItems = await itemChildGenerator();
     res.send(unsavedItems);
   });
 
@@ -24,6 +25,7 @@ export default (app: ReturnType<typeof express>) => {
 
   app.post('/item-child', jsonBodyParser, (req, res) => {
     let item = new ItemChild(req.body);
+    console.log(item);
     item.save()
       .then((data: Object) => { res.send(data) })
       .catch((err: Object) => { res.statusCode = 400; res.send(err); })
