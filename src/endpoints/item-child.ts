@@ -29,6 +29,12 @@ export default (app: ReturnType<typeof express>) => {
         .catch((err: Object) => { res.statusCode = 400; res.send(err); });
   });
 
+  app.get('/item-child/:parent_id/:child_id', (req, res) => {
+      ItemChild.find({ "_id": req.params.id })
+        .then((data: Object) => { res.send(data) })
+        .catch((err: Object) => { res.statusCode = 400; res.send(err); });
+  });
+
   app.delete('/item-child/:id', (req, res) => {
     ItemChild.deleteOne({ "_id": req.params.id })
       .then((data: Object) => { res.send(data) })
