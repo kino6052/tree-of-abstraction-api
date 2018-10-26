@@ -37,7 +37,10 @@ export const iterateOverData = (data: Array<Item>): Array<ChildrenMapElement> =>
       ...result,
       ...(
         children.map(
-          (child: String) => ({_id, child})
+          (child: String) => {
+            console.log(_id, child);
+            return {_id, child}
+          }
         )
       )
     ]
@@ -58,6 +61,7 @@ export const saveItemChildren = async (itemChildArray: Array<ChildrenMapElement>
       try {
         await saveItemChild(parentId, childId);
       } catch (e) {
+        console.log('Couldn\'t save item child', parentId, childId);
         unsavedItemChildren.push({ '_id': parentId, child: childId })
       }
     }
