@@ -4,51 +4,53 @@ import { Calendar } from '../schemas/calendar/calendar';
 
 export default (app: ReturnType<typeof express>) => {
   // Calendar CRUD
+  interface DateInterface {
+    setYear?: (one: number) => number,
+    setMonth: (one: number) => number,
+    setDate: (one: number) => number
+  }
+  
   app.get('/calendar/:year/:month/:day', (req, res) => {
       let {
         params: {
-          year,
-          month,
-          day
+          year = 2018,
+          month = 1,
+          day = 1
         } = {}
       } = req;
-      let date = new Date();
+      let date = <DateInterface> new Date
+      if (!date.setYear) {
+        date.setYear = (one:number) => { return one; }
+      }
       date.setYear(year);
       date.setMonth(month);
       date.setDate(day);
-      Item.find({ "date": date })
-          .then((data) => { res.send(data) })
-          .catch((err) => { res.statusCode = 400; res.send(err); });
+      Calendar.find({ "date": date })
+          .then((data:Object) => { res.send(data) })
+          .catch((err:Object) => { res.statusCode = 400; res.send(err); });
   });
   
   app.delete('/calendar/:id', (req, res) => {
       let {
         params: {
-          id
+          id = null
         } = {}
       } = req;
-      Item.deleteOne({ "_id": id })
+      Calendar.deleteOne({ "_id": id })
           .then((data) => { res.send(data) })
           .catch((err) => { res.statusCode = 400; res.send(err); });
   });
 
-  app.post('/item', jsonBodyParser, (req, res) => {
+  app.post('/calendar', jsonBodyParser, (req, res) => {
     let calendar = new Calendar(req.body);
-    item.save()
+    calendar.save()
       .then((data => { res.send(data) }))
       .catch(err => { res.statusCode = 400; res.send(err); })
   });
 
   app.get('/calendar', (req, res) => {
-      let {
-        params: {
-          year,
-          month,
-          day
-        } = {}
-      } = req;
-      let date = new Date();
-      Item.find()
+      console.log(req.body);
+      Calendar.find()
           .then((data) => { res.send(data) })
           .catch((err) => { res.statusCode = 400; res.send(err); });
   });
