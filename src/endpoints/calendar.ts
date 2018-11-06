@@ -4,12 +4,6 @@ import { Calendar } from '../schemas/calendar/calendar';
 
 export default (app: ReturnType<typeof express>) => {
   // Calendar CRUD
-  interface DateInterface {
-    setYear?: (one: number) => number,
-    setMonth: (one: number) => number,
-    setDate: (one: number) => number
-  }
-  
   app.get('/calendar/:year/:month/:day', (req, res) => {
       let {
         params: {
@@ -18,14 +12,7 @@ export default (app: ReturnType<typeof express>) => {
           day = 1
         } = {}
       } = req;
-      let date = <DateInterface> new Date
-      if (!date.setYear) {
-        date.setYear = (one:number) => { return one; }
-      }
-      date.setYear(year);
-      date.setMonth(month);
-      date.setDate(day);
-      Calendar.find({ "date": date })
+      Calendar.find({ year, month, day })
           .then((data:Object) => { res.send(data) })
           .catch((err:Object) => { res.statusCode = 400; res.send(err); });
   });

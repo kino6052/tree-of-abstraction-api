@@ -7,8 +7,16 @@ export const calendarSchema = new Schema(
           type: String,
           required: true
         },
-        date: {
-          type: Date,
+        year: {
+          type: Number,
+          required: true
+        },
+        month: {
+          type: Number,
+          required: true
+        },
+        day: {
+          type: Number,
           required: true
         }
     },
