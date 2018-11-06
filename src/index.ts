@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import itemEndpoints from './endpoints/item';
 import noteEndpoints from './endpoints/note';
+import calendarEndpoints from './endpoints/calendar';
 import itemNoteEndpoints from './endpoints/item-note';
 import itemChildEndpoints from './endpoints/item-child';
 
@@ -15,6 +16,7 @@ itemEndpoints(app);
 noteEndpoints(app);
 itemNoteEndpoints(app);
 itemChildEndpoints(app);
+calendarEndpoints(app);
 
 mongoose.connect(MLAB);
 app.listen(process.env.PORT || '8080', () => console.log(`Listening... ${process.env.PORT}`));
