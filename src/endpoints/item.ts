@@ -57,17 +57,39 @@ export default (app: ReturnType<typeof express>) => {
 
   app.post('/item', jsonBodyParser, (req, res) => {
     let {
-      body = {},
+      body = {
+        changedItemNodes,
+        removedItemNodes
+      },
       query: {
         type = 'none'
       } = {}
     } = req;
     if (type === 'batch') {
-      if (body.length > 0) {
+      if (changedItemNodes.length > 0) {
         let promises = [];
-        for (let item of body) {
+        for (let item of changedItemNodes) {
             promises.push(
               Item.update({ _id: item._id }, item, { upsert : true })
+            )
+        }
+        Promise.all(promises)
+        .then(
+          (data) => {
+            res.send(data);    
+          }
+        )
+        .catch(
+          (err) => {
+            res.send(err);    
+          }
+        );
+      }
+      if (removedItemNodes.length > 0) {
+        let promises = [];
+        for (let item of removedItemNodes) {
+            promises.push(
+              Item.deleteOne({ _id: item._id })
             )
         }
         Promise.all(promises)
