@@ -64,9 +64,23 @@ export default (app: ReturnType<typeof express>) => {
     } = req;
     if (type === 'batch') {
       if (body.length > 0) {
-        Item.create(body)
-          .then((data => { res.send(data) }))
-          .catch(err => { res.statusCode = 400; res.send(err); }) 
+        let promises = [];
+        for (let item of body) {
+            promises.push(
+              Item.update({ _id: item._id }, item, { upsert : true })
+            )
+        }
+        Promise.all(promises)
+        .then(
+          (data) => {
+            res.send(data);    
+          }
+        )
+        .catch(
+          (err) => {
+            res.send(err);    
+          }
+        );
       }
     } else {
       let item = new Item(body);
