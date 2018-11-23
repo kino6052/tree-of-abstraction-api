@@ -56,9 +56,23 @@ export default (app: ReturnType<typeof express>) => {
   });
 
   app.post('/item', jsonBodyParser, (req, res) => {
-    let item = new Item(req.body);
-    item.save()
-      .then((data => { res.send(data) }))
-      .catch(err => { res.statusCode = 400; res.send(err); })
+    let {
+      body = {},
+      query: {
+        type = 'none'
+      } = {}
+    } = req;
+    if (type === 'batch') {
+      if (body.length > 0) {
+        Item.create(body)
+          .then((data => { res.send(data) }))
+          .catch(err => { res.statusCode = 400; res.send(err); }) 
+      }
+    } else {
+      let item = new Item(body);
+      item.save()
+        .then((data => { res.send(data) }))
+        .catch(err => { res.statusCode = 400; res.send(err); })
+    }
   });
 }

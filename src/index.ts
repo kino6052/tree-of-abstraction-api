@@ -19,4 +19,4 @@ itemChildEndpoints(app);
 calendarEndpoints(app);
 
 mongoose.connect(MLAB);
-app.listen(process.env.PORT || '8080', () => console.log(`Listening... ${process.env.PORT}`));
+app.listen('4001', () => console.log(`Listening... ${process.env.PORT}`));
